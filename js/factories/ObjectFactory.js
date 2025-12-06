@@ -56,9 +56,7 @@ class ObjectFactory {
             table: () => this.createTable(),
             fountain: () => this.createFountain(),
             lantern: () => this.createLantern(),
-            rock: () => this.createRock(),
-            gnome: () => this.createGnome(),
-            butterfly: () => this.createButterfly()
+            rock: () => this.createRock()
         };
 
         const creator = creators[item.id];
@@ -200,81 +198,6 @@ class ObjectFactory {
         rock.position.y = 0.25;
         rock.castShadow = true;
         group.add(rock);
-        
-        return group;
-    }
-
-    /**
-     * Create gnome
-     */
-    createGnome() {
-        const group = new THREE.Group();
-        
-        const body = new THREE.Mesh(
-            new THREE.CapsuleGeometry(0.2, 0.4, 4, 8),
-            new THREE.MeshLambertMaterial({ color: 0x1565c0 })
-        );
-        body.position.y = 0.4;
-        body.castShadow = true;
-        group.add(body);
-        
-        const head = new THREE.Mesh(
-            new THREE.SphereGeometry(0.18, 8, 8),
-            new THREE.MeshLambertMaterial({ color: 0xffccbc })
-        );
-        head.position.y = 0.8;
-        head.castShadow = true;
-        group.add(head);
-        
-        const hat = new THREE.Mesh(
-            new THREE.ConeGeometry(0.2, 0.5, 8),
-            new THREE.MeshLambertMaterial({ color: 0xef5350 })
-        );
-        hat.position.y = 1.15;
-        hat.castShadow = true;
-        group.add(hat);
-        
-        const beard = new THREE.Mesh(
-            new THREE.ConeGeometry(0.15, 0.3, 6),
-            new THREE.MeshLambertMaterial({ color: 0xeeeeee })
-        );
-        beard.position.set(0, 0.65, 0.1);
-        beard.rotation.x = Math.PI;
-        group.add(beard);
-        
-        return group;
-    }
-
-    /**
-     * Create butterfly (animated)
-     */
-    createButterfly() {
-        const group = new THREE.Group();
-        
-        const body = new THREE.Mesh(
-            new THREE.CapsuleGeometry(0.03, 0.15, 4, 8),
-            new THREE.MeshLambertMaterial({ color: 0x333333 })
-        );
-        body.position.y = 1;
-        body.rotation.x = Math.PI / 2;
-        group.add(body);
-        
-        const wingMat = new THREE.MeshLambertMaterial({
-            color: 0x7c4dff,
-            side: THREE.DoubleSide,
-            transparent: true,
-            opacity: 0.8
-        });
-        
-        [-1, 1].forEach(side => {
-            const wing = new THREE.Mesh(new THREE.CircleGeometry(0.2, 8), wingMat);
-            wing.position.set(side * 0.15, 1, 0);
-            wing.rotation.y = side * 0.3;
-            group.add(wing);
-        });
-        
-        group.userData.animate = true;
-        this.state.registerAnimatedObject(group);
         
         return group;
     }
